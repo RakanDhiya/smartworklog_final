@@ -25,7 +25,7 @@
         @if (auth()->user()->can('activities.view') || auth()->user()->can('tasks.view') || auth()->user()->can('schedules.view'))
             <div>
                 <p class="px-3 text-xs font-semibold text-gray-400 uppercase mb-1">Work Management</p>
-                <x-nav-link :disabled="true">Activities</x-nav-link>
+                <x-nav-link href="{{ route('activities.index') }}" :active="request()->routeIs('activities.*')">Activities</x-nav-link>
                 <x-nav-link :disabled="true">Tasks</x-nav-link>
                 <x-nav-link :disabled="true">Schedules</x-nav-link>
             </div>
@@ -64,6 +64,11 @@
                 <p class="px-3 text-xs font-semibold text-gray-400 uppercase mb-1">Settings</p>
                 @can('audit_logs.view')
                     <x-nav-link :disabled="true">Audit Logs</x-nav-link>
+                @endcan
+                @can('create', App\Models\ActivityType::class)
+                    <x-nav-link href="{{ route('activity-types.index') }}" :active="request()->routeIs('activity-types.*')">
+                        Activity Types
+                    </x-nav-link>
                 @endcan
                 @can('office_profile.manage')
                     <x-nav-link :disabled="true">Office Profile</x-nav-link>

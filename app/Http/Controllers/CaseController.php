@@ -49,7 +49,7 @@ class CaseController extends Controller
     {
         $this->authorize('view', $case);
 
-        $case->load(['client', 'pic', 'creator', 'team', 'statusHistories.changer']);
+        $case->load(['client', 'pic', 'creator', 'team', 'statusHistories.changer', 'activities.user', 'activities.activityType']);
 
         return view('cases.show', [
             'case' => $case,

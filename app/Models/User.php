@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes, HasRoles;
 
-    protected $guard_name = 'web'; // wajib eksplisit agar konsisten dengan guard default kita
+    protected $guard_name = 'web'; // wajib eksplisit agar konsisten dengan guard default
 
     protected $fillable = [
         'name',
@@ -38,5 +38,10 @@ class User extends Authenticatable
     public function isActive(): bool
     {
         return $this->is_active === true;
+    }
+
+    public function activities(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Activity::class);
     }
 }

@@ -5,7 +5,7 @@
         <form method="POST" action="{{ route('cases.update', $case) }}" class="space-y-4">
             @csrf
             @method('PUT')
-            @include('cases._form')
+            @include('cases.form')
 
             <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-md">
                 Update
