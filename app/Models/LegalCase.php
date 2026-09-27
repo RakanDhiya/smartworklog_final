@@ -78,6 +78,10 @@ class LegalCase extends Model
         return $this->hasMany(CaseStatusHistory::class, 'case_id')->latest('created_at');
     }
 
-    // NOTE: relasi activities(), tasks(), documents(), schedules()
-    // ditambahkan begitu tabel masing-masing dibuat di Phase 5-9.
+    public function activities(): HasMany
+    {
+        return $this->hasMany(Activity::class, 'case_id');
+    }
+    // NOTE: relasi tasks(), documents(), schedules()
+    // ditambahkan begitu tabel masing-masing dibuat di Phase 7-9.
 }

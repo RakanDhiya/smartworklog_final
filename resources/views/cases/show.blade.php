@@ -151,9 +151,54 @@
             @endcan
         </div>
 
-        {{-- PLACEHOLDER TABS --}}
-        <div x-show="tab === 'activities'" class="bg-white rounded-lg shadow-sm p-6 text-sm text-gray-400">
-            Modul Activities akan tersedia di Phase 5.
+        {{-- ACTIVITIES --}}
+        <div x-show="tab === 'activities'" class="bg-white rounded-lg shadow-sm p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-sm font-semibold text-gray-700">Activities terkait Case ini</h3>
+                @can('create', App\Models\Activity::class)
+                    <a href="{{ route('activities.create') }}" class="text-blue-600 hover:underline text-sm">
+                        + Catat Activity Baru
+                    </a>
+                @endcan
+            </div>
+
+            <table class="w-full text-sm">
+                <thead class="text-gray-500 text-left border-b border-gray-100">
+                    <tr>
+                        <th class="py-2">Tanggal</th>
+                        <th class="py-2">Employee</th>
+                        <th class="py-2">Tipe</th>
+                        <th class="py-2">Deskripsi</th>
+                        <th class="py-2">Durasi</th>
+                        <th class="py-2 text-right">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @forelse ($case->activities->sortByDesc('start_time') as $activity)
+                        <tr>
+                            <td class="py-2 text-gray-600 whitespace-nowrap">{{ $activity->start_time->format('d M Y H:i') }}</td>
+                            <td class="py-2 text-gray-600">{{ $activity->user->name }}</td>
+                            <td class="py-2 text-gray-600">{{ $activity->activityType->name }}</td>
+                            <td class="py-2 text-gray-600 max-w-xs truncate">{{ $activity->description }}</td>
+                            <td class="py-2 text-gray-600 whitespace-nowrap">{{ $activity->duration_minutes }} menit</td>
+                            <td class="py-2 text-right">
+                                @can('update', $activity)
+                                    <a href="{{ route('activities.edit', $activity) }}" class="text-blue-600 hover:underline">Edit</a>
+                                @endcan
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="py-6 text-center text-gray-400">Belum ada activity terkait case ini.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+
+            <p class="text-xs text-gray-400 mt-4">
+                Total waktu tercatat: {{ $case->activities->sum('duration_minutes') }} menit
+                ({{ number_format($case->activities->sum('duration_minutes') / 60, 1) }} jam)
+            </p>
         </div>
         <div x-show="tab === 'tasks'" class="bg-white rounded-lg shadow-sm p-6 text-sm text-gray-400">
             Modul Tasks akan tersedia di Phase 7.

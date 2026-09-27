@@ -21,4 +21,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('cases', CaseController::class);
     Route::post('cases/{case}/team', [CaseController::class, 'addTeamMember'])->name('cases.team.store');
     Route::delete('cases/{case}/team/{user}', [CaseController::class, 'removeTeamMember'])->name('cases.team.destroy');
+
+    Route::resource('activity-types', \App\Http\Controllers\ActivityTypeController::class)
+        ->only(['index', 'store', 'update', 'destroy']);
+
+    Route::resource('activities', \App\Http\Controllers\ActivityController::class)->except(['show']);
 });
