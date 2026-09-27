@@ -9,12 +9,9 @@ use Illuminate\Support\Carbon;
 
 class ActivityService
 {
-    /**
-     * List activity sesuai scope role:
-     * - Admin: semua activity.
-     * - Lawyer/Staff: activity miliknya sendiri, ATAU activity terkait
-     *   case yang dia PIC/anggota tim.
-     */
+    // List activity sesuai scope role:
+    // - Admin: semua activity.
+    // - Lawyer/Staff: activity miliknya sendiri, ATAU activity terkait case yang dia PIC/anggota tim.
     public function paginate(User $user, array $filters = []): LengthAwarePaginator
     {
         $query = Activity::query()->with(['user:id,name', 'case:id,case_number,title', 'activityType:id,name']);
@@ -36,11 +33,7 @@ class ActivityService
         return $query->orderByDesc('start_time')->paginate(20)->withQueryString();
     }
 
-    /**
-     * Buat activity baru. duration_minutes SELALU dihitung dari
-     * end_time - start_time di sini — tidak pernah menerima input
-     * manual dari form (sesuai keputusan final Phase 1).
-     */
+    // Buat activity baru. duration_minutes SELALU dihitung dari end_time - start_time di sini — tidak pernah menerima input manual dari form (sesuai keputusan final Phase 1)
     public function create(array $data, User $user): Activity
     {
         return Activity::create([

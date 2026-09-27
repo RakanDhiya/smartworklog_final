@@ -24,12 +24,7 @@ class ActivityTypeService
         return $activityType;
     }
 
-        /**
-     * Cegah penghapusan activity type yang masih dipakai oleh Activity
-     * yang sudah ada — mencegah data activity kehilangan kategori.
-     *
-     * @throws \InvalidArgumentException
-     */
+        // Cegah penghapusan activity type yang masih dipakai oleh Activity yang sudah ada — mencegah data activity kehilangan kategori
     public function delete(ActivityType $activityType): void
     {
         if ($activityType->activities()->exists()) {

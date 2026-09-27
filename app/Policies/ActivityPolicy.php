@@ -12,11 +12,7 @@ class ActivityPolicy
         return $user->can('activities.view');
     }
 
-    /**
-     * Object-level: boleh lihat activity kalau itu miliknya sendiri,
-     * ATAU dia admin, ATAU dia terlibat di case yang sama dengan activity itu
-     * (sesuai brief: "Melihat aktivitas terkait kasus yang memiliki akses").
-     */
+    // Object-level: boleh lihat activity kalau itu miliknya sendiri, ATAU dia admin, ATAU dia terlibat di case yang sama dengan activity itu
     public function view(User $user, Activity $activity): bool
     {
         if (! $user->can('activities.view')) {
@@ -40,11 +36,8 @@ class ActivityPolicy
         return $user->can('activities.create');
     }
 
-    /**
-     * Update HANYA boleh oleh pemilik activity itu sendiri.
-     * Admin tidak diberi akses edit activity orang lain by default
-     * (activity adalah catatan kerja personal).
-     */
+    // Update HANYA boleh oleh pemilik activity itu sendiri.
+    // Admin tidak diberi akses edit activity orang lain by default
     public function update(User $user, Activity $activity): bool
     {
         return $user->can('activities.update') && $activity->user_id === $user->id;

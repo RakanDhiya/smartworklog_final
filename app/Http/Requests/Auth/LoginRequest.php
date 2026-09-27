@@ -24,11 +24,6 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    /**
-     * Coba autentikasi kredensial request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
@@ -52,9 +47,6 @@ class LoginRequest extends FormRequest
         RateLimiter::clear($this->throttleKey());
     }
 
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function ensureIsNotRateLimited(): void
     {
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
@@ -73,10 +65,7 @@ class LoginRequest extends FormRequest
         ]);
     }
 
-    /**
-     * Kombinasi email + IP, supaya brute-force dari IP lain
-     * terhadap email yang sama tetap dibatasi per-IP.
-     */
+    //Kombinasi email + IP, supaya brute-force dari IP lain terhadap email yang sama tetap dibatasi per-IP
     public function throttleKey(): string
     {
         return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
