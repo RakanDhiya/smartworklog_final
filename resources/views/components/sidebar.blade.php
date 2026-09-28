@@ -26,15 +26,14 @@
             <div>
                 <p class="px-3 text-xs font-semibold text-gray-400 uppercase mb-1">Work Management</p>
                 <x-nav-link href="{{ route('activities.index') }}" :active="request()->routeIs('activities.*')">Activities</x-nav-link>
-                <x-nav-link :disabled="true">Tasks</x-nav-link>
+                <x-nav-link href="{{ route('tasks.index') }}" :active="request()->routeIs('tasks.*')">Tasks</x-nav-link>
                 <x-nav-link :disabled="true">Schedules</x-nav-link>
             </div>
         @endif
 
         @if (auth()->user()->can('attendances.view'))
             <div>
-                <x-nav-link :disabled="true">Attendance</x-nav-link>
-            </div>
+                <x-nav-link href="{{ route('attendances.index') }}" :active="request()->routeIs('attendances.*')">Attendance</x-nav-link>
         @endif
 
         @if (auth()->user()->can('documents.view'))
