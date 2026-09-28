@@ -44,4 +44,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Activity::class);
     }
+
+    public function attendance(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function tasks(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Task::class, 'assigned_to');
+    }
 }
